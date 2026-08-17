@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package datos;
-import config.Config;
+import config.Configuracion;
 import entidades.DistritoElectoral;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,13 +16,19 @@ import java.io.IOException;
 
 public class DistritoRepository implements RepositorioDistritos{
     
+    private final Configuracion configuracion;
+
+    public DistritoRepository(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+    
     @Override
     public DistritoElectoral buscarPorCodigo (String codigoElectoral)
         throws IOException {
 
         try (BufferedReader br =
                      new BufferedReader(
-                             new FileReader(Config.DISTRITOS_PATH))) {
+                             new FileReader(configuracion.getRutaDistelec()))) {
 
             String linea;
 

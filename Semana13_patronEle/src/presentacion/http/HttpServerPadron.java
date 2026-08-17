@@ -5,7 +5,7 @@
 package presentacion.http;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import config.Config;
+import config.Configuracion;
 import dto.ErrorDTO;
 import dto.PersonaDTO;
 import logica.PadronService;
@@ -13,31 +13,39 @@ import util.JsonUtil;
 
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
 /**
  *
  * @author jasga
  */
 public class HttpServerPadron {
     
-        public void iniciar() {
+    private final Configuracion configuracion;
+
+    public HttpServerPadron(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+
+    public void iniciar() {
 
         try {
 
             HttpServer server = HttpServer.create(
-                    new InetSocketAddress(Config.HTTP_PORT),
+                    new InetSocketAddress(configuracion.getPuertoHttp()),
                     0);
 
             server.createContext(
                     "/padron",
                     this::procesarConsulta);
-    
-              server.setExecutor(null);
+
+            server.setExecutor(
+                    Executors.newCachedThreadPool());
 
             server.start();
 
             System.out.println(
                     "Servidor HTTP iniciado en puerto "
-                            + Config.HTTP_PORT);
+                            + configuracion.getPuertoHttp());
 
         } catch (Exception ex) {
 
@@ -90,8 +98,24 @@ public class HttpServerPadron {
 
             String cedula = partes[2];
 
+            if (!util.Validador.esCedulaValida(cedula)) {
+
+                ErrorDTO error =
+                        new ErrorDTO(
+                                true,
+                                400,
+                                "Cédula inválida.");
+
+                responder(
+                        exchange,
+                        400,
+                        JsonUtil.convertirAJson(error));
+
+                return;
+            }
+
             PadronService service =
-                    new PadronService();
+                    new PadronService(configuracion);
 
             PersonaDTO persona =
                     service.consultarPorCedula(cedula);
@@ -119,7 +143,31 @@ public class HttpServerPadron {
 
         } catch (Exception ex) {
 
+            // Cualquier fallo inesperado (por ejemplo, un problema leyendo
+            // PADRON.txt) antes solo se registraba con printStackTrace y
+            // el cliente se quedaba sin ninguna respuesta. Ahora, mientras
+            // sea posible, se le devuelve un ErrorDTO en vez de dejarlo
+            // esperando.
             ex.printStackTrace();
+
+            try {
+
+                ErrorDTO error =
+                        new ErrorDTO(
+                                true,
+                                500,
+                                "Error interno del servidor.");
+
+                responder(
+                        exchange,
+                        500,
+                        JsonUtil.convertirAJson(error));
+
+            } catch (Exception exRespuesta) {
+
+                exRespuesta.printStackTrace();
+
+            }
 
         }
     }

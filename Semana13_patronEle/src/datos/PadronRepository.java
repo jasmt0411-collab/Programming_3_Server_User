@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package datos;
-import config.Config;
+import config.Configuracion;
 import entidades.Persona;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,12 +13,19 @@ import java.io.IOException;
  * @author jasga
  */
 public class PadronRepository implements RepositorioPadron {
+    
+    private final Configuracion configuracion;
+
+    public PadronRepository(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+    
     @Override
     public Persona buscarPorCedula(String cedula) throws IOException {
 
         try (BufferedReader br =
                      new BufferedReader(
-                             new FileReader(Config.PADRON_PATH))) {
+                             new FileReader(configuracion.getRutaPadron()))) {
 
             String linea;
 
