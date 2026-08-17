@@ -1,13 +1,18 @@
-package semana13_patronele;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package pruebas;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-public class TCPTestCliente {
-
-    public static void main(String[] args) {
+/**
+ *
+ * @author jasga
+ */
+public class ClienteTCPPrueba {
+       public static void main(String[] args) {
 
         try (
                 Socket socket =
@@ -24,7 +29,7 @@ public class TCPTestCliente {
                                         socket.getInputStream()));
         ) {
 
-            salida.println("GET|115550555");
+            salida.println("GET|118270375");
 
             String respuesta =
                     entrada.readLine();
@@ -36,5 +41,5 @@ public class TCPTestCliente {
             ex.printStackTrace();
 
         }
-    }
+    } 
 }

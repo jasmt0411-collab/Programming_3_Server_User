@@ -1,15 +1,24 @@
-package repository;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package datos;
 import config.Config;
-import entities.DistritoElectoral;
+import entidades.DistritoElectoral;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+/**
+ *
+ * @author jasga
+ */
 
-public class DistritoRepository {
 
-    public DistritoElectoral buscarPorCodigo(String codigoElectoral)
-            throws IOException {
+public class DistritoRepository implements RepositorioDistritos{
+    
+    @Override
+    public DistritoElectoral buscarPorCodigo (String codigoElectoral)
+        throws IOException {
 
         try (BufferedReader br =
                      new BufferedReader(
@@ -32,7 +41,6 @@ public class DistritoRepository {
                 }
             }
         }
-
         return null;
     }
 }

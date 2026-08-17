@@ -1,13 +1,19 @@
-package repository;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package datos;
 import config.Config;
-import entities.Persona;
+import entidades.Persona;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-public class PadronRepository {
-
+/**
+ *
+ * @author jasga
+ */
+public class PadronRepository implements RepositorioPadron {
+    @Override
     public Persona buscarPorCedula(String cedula) throws IOException {
 
         try (BufferedReader br =
@@ -32,7 +38,6 @@ public class PadronRepository {
                 }
             }
         }
-
         return null;
     }
 }

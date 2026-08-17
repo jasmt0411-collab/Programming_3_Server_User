@@ -1,19 +1,26 @@
-package service;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package logica;
 import dto.PersonaDTO;
-import entities.DistritoElectoral;
-import entities.Persona;
-import repository.DistritoRepository;
-import repository.PadronRepository;
+import entidades.DistritoElectoral;
+import entidades.Persona;
+import datos.DistritoRepository;
+import datos.PadronRepository;
+import datos.RepositorioDistritos;
+import datos.RepositorioPadron;
 import java.io.IOException;
-
+/**
+ *
+ * @author jasga
+ */
 public class PadronService {
-
-    private final PadronRepository padronRepository;
-    private final DistritoRepository distritoRepository;
-
-    public PadronService() {
-
+    private final RepositorioPadron padronRepository;
+    private final RepositorioDistritos distritoRepository;
+    
+    public PadronService(){
+    
         this.padronRepository = new PadronRepository();
         this.distritoRepository = new DistritoRepository();
     }
@@ -45,7 +52,7 @@ public class PadronService {
             dto.setCanton(distrito.getCanton());
             dto.setDistrito(distrito.getDistrito());
         }
-
         return dto;
     }
+    
 }

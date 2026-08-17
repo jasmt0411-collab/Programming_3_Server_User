@@ -1,16 +1,21 @@
-package tcp;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package presentacion.tcp;
 import dto.ErrorDTO;
 import dto.PersonaDTO;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import service.PadronService;
+import logica.PadronService;
 import util.JsonUtil;
-
+/**
+ *
+ * @author jasga
+ */
 public class TCPClienteHandler implements Runnable {
-
     private Socket socket;
 
     public TCPClienteHandler(Socket socket) {

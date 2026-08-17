@@ -1,19 +1,25 @@
-package http;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package presentacion.http;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import config.Config;
 import dto.ErrorDTO;
 import dto.PersonaDTO;
-import service.PadronService;
+import logica.PadronService;
 import util.JsonUtil;
 
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-
+/**
+ *
+ * @author jasga
+ */
 public class HttpServerPadron {
-
-    public void iniciar() {
+    
+        public void iniciar() {
 
         try {
 
@@ -24,8 +30,8 @@ public class HttpServerPadron {
             server.createContext(
                     "/padron",
                     this::procesarConsulta);
-
-            server.setExecutor(null);
+    
+              server.setExecutor(null);
 
             server.start();
 
@@ -138,5 +144,5 @@ public class HttpServerPadron {
         os.write(json.getBytes());
 
         os.close();
-    }
+    }  
 }
