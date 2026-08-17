@@ -1,0 +1,4 @@
+servidor.host=localhost
+servidor.puerto.tcp=5000
+servidor.puerto.http=8080
+timeout.ms=5000
