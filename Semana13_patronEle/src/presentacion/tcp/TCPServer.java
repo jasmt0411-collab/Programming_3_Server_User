@@ -16,7 +16,7 @@ public class TCPServer {
     
     public void iniciar(){
             ExecutorService pool =
-                Executors.newFixedThreadPool(10);
+                Executors.newCachedThreadPool();
 
         try (ServerSocket servidor = new ServerSocket(Config.TCP_PORT)) {
 

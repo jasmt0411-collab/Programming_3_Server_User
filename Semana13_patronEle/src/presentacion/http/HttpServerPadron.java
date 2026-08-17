@@ -13,6 +13,7 @@ import util.JsonUtil;
 
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
 /**
  *
  * @author jasga
@@ -31,7 +32,7 @@ public class HttpServerPadron {
                     "/padron",
                     this::procesarConsulta);
     
-              server.setExecutor(null);
+              server.setExecutor(Executors.newCachedThreadPool());
 
             server.start();
 
