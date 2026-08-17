@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  */
 public class HttpServerPadron {
     
-     private final Configuracion configuracion;
+    private final Configuracion configuracion;
 
     public HttpServerPadron(Configuracion configuracion) {
         this.configuracion = configuracion;
@@ -98,6 +98,22 @@ public class HttpServerPadron {
 
             String cedula = partes[2];
 
+            if (!util.Validador.esCedulaValida(cedula)) {
+
+                ErrorDTO error =
+                        new ErrorDTO(
+                                true,
+                                400,
+                                "Cédula inválida.");
+
+                responder(
+                        exchange,
+                        400,
+                        JsonUtil.convertirAJson(error));
+
+                return;
+            }
+
             PadronService service =
                     new PadronService(configuracion);
 
@@ -127,7 +143,31 @@ public class HttpServerPadron {
 
         } catch (Exception ex) {
 
+            // Cualquier fallo inesperado (por ejemplo, un problema leyendo
+            // PADRON.txt) antes solo se registraba con printStackTrace y
+            // el cliente se quedaba sin ninguna respuesta. Ahora, mientras
+            // sea posible, se le devuelve un ErrorDTO en vez de dejarlo
+            // esperando.
             ex.printStackTrace();
+
+            try {
+
+                ErrorDTO error =
+                        new ErrorDTO(
+                                true,
+                                500,
+                                "Error interno del servidor.");
+
+                responder(
+                        exchange,
+                        500,
+                        JsonUtil.convertirAJson(error));
+
+            } catch (Exception exRespuesta) {
+
+                exRespuesta.printStackTrace();
+
+            }
 
         }
     }
