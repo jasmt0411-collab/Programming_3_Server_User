@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package logica;
+import config.Configuracion;
 import dto.PersonaDTO;
 import entidades.DistritoElectoral;
 import entidades.Persona;
@@ -19,10 +20,9 @@ public class PadronService {
     private final RepositorioPadron padronRepository;
     private final RepositorioDistritos distritoRepository;
     
-    public PadronService(){
-    
-        this.padronRepository = new PadronRepository();
-        this.distritoRepository = new DistritoRepository();
+    public PadronService(Configuracion configuracion) {
+        this.padronRepository = new PadronRepository(configuracion);
+        this.distritoRepository = new DistritoRepository(configuracion);
     }
 
     public PersonaDTO consultarPorCedula(String cedula)

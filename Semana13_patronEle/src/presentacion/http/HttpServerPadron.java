@@ -5,7 +5,7 @@
 package presentacion.http;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import config.Config;
+import config.Configuracion;
 import dto.ErrorDTO;
 import dto.PersonaDTO;
 import logica.PadronService;
@@ -20,25 +20,32 @@ import java.util.concurrent.Executors;
  */
 public class HttpServerPadron {
     
-        public void iniciar() {
+     private final Configuracion configuracion;
+
+    public HttpServerPadron(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+
+    public void iniciar() {
 
         try {
 
             HttpServer server = HttpServer.create(
-                    new InetSocketAddress(Config.HTTP_PORT),
+                    new InetSocketAddress(configuracion.getPuertoHttp()),
                     0);
 
             server.createContext(
                     "/padron",
                     this::procesarConsulta);
-    
-              server.setExecutor(Executors.newCachedThreadPool());
+
+            server.setExecutor(
+                    Executors.newCachedThreadPool());
 
             server.start();
 
             System.out.println(
                     "Servidor HTTP iniciado en puerto "
-                            + Config.HTTP_PORT);
+                            + configuracion.getPuertoHttp());
 
         } catch (Exception ex) {
 
@@ -92,7 +99,7 @@ public class HttpServerPadron {
             String cedula = partes[2];
 
             PadronService service =
-                    new PadronService();
+                    new PadronService(configuracion);
 
             PersonaDTO persona =
                     service.consultarPorCedula(cedula);

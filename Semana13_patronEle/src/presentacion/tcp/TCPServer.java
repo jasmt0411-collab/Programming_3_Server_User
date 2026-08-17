@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package presentacion.tcp;
-import config.Config;
+import config.Configuracion;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -14,15 +14,22 @@ import java.util.concurrent.Executors;
  */
 public class TCPServer {
     
+    private final Configuracion configuracion;
+
+    public TCPServer(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+    
+    
     public void iniciar(){
             ExecutorService pool =
                 Executors.newCachedThreadPool();
 
-        try (ServerSocket servidor = new ServerSocket(Config.TCP_PORT)) {
+        try (ServerSocket servidor = new ServerSocket(configuracion.getPuertoTcp())) {
 
             System.out.println(
                     "Servidor TCP iniciado en puerto "
-                    + Config.TCP_PORT);
+                    + configuracion.getPuertoTcp());
 
             while (true) {
 

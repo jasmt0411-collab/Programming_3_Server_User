@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package presentacion.tcp;
+import config.Configuracion;
 import dto.ErrorDTO;
 import dto.PersonaDTO;
 import java.io.BufferedReader;
@@ -17,9 +18,11 @@ import util.JsonUtil;
  */
 public class TCPClienteHandler implements Runnable {
     private Socket socket;
+    private Configuracion configuracion;
 
     public TCPClienteHandler(Socket socket) {
         this.socket = socket;
+         this.configuracion = configuracion;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class TCPClienteHandler implements Runnable {
             String cedula = partes[1];
 
             PadronService service =
-                    new PadronService();
+                    new PadronService(configuracion);
 
             PersonaDTO persona =
                     service.consultarPorCedula(cedula);
