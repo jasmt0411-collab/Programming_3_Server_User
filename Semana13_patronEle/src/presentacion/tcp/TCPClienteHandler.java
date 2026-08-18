@@ -18,18 +18,19 @@ import util.Validador;
  * @author jasga
  */
 public class TCPClienteHandler implements Runnable {
+    
     private Socket socket;
     private Configuracion configuracion;
 
-    public TCPClienteHandler(Socket socket) {
+    public TCPClienteHandler(Socket socket, Configuracion configuracion) {
         this.socket = socket;
-         this.configuracion = configuracion;
+        this.configuracion = configuracion;
     }
 
     @Override
     public void run() {
 
-            try (
+        try (
                 BufferedReader entrada =
                         new BufferedReader(
                                 new InputStreamReader(
