@@ -36,7 +36,7 @@ public class TCPServer {
                 Socket cliente =
                         servidor.accept();
 
-                pool.execute(new TCPClienteHandler(cliente));
+                pool.execute(new TCPClienteHandler(cliente, configuracion));
             }
 
         } catch (Exception ex) {
